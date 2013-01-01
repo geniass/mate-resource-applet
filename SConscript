@@ -1,31 +1,39 @@
+def merge_dols(dol1, dol2):
+    keys = set(dol1).union(dol2)
+    no = []
+    return dict((k, dol1.get(k, no) + dol2.get(k, no)) for k in keys)
+
+
 env = Environment(tools=['default', 'scanreplace'], toolpath=['tools'])
 
 #env.ParseConfig('pkg-config --cflags --libs glib-2.0')
 #env.ParseConfig('pkg-config --cflags --libs libmatepanelapplet-3.0')
 #env.ParseConfig('pkg-config --cflags --libs gtk+-2.0')
 
-flags = {}
-flags.update(env.ParseFlags('!pkg-config --cflags --libs glib-2.0'))
-print flags
+flags = env.ParseFlags('!pkg-config --cflags --libs glib-2.0')
+print "GLIB: ", flags
 print "\n\n\n"
 
-flags.update(env.ParseFlags('!pkg-config --cflags --libs libmatepanelapplet-3.0'))
-print flags
+flags = merge_dols(flags, env.ParseFlags('!pkg-config --cflags --libs libmatepanelapplet-3.0'))
+print "MATE: ", flags
 print "\n\n\n"
 
-flags.update(env.ParseFlags('!pkg-config --cflags --libs gtk+-2.0'))
+flags = merge_dols(flags, env.ParseFlags('!pkg-config --cflags --libs gtk+-2.0'))
 env.MergeFlags(flags)
 print env.ParseFlags('!pkg-config --cflags --libs libmatepanelapplet-3.0')
 print "\n\n"
 print flags
 print "\n\n\n"
 
+env.Append(CPPPATH = ["src"])
 
+#env['CPPPATH'] = flags['CPPPATH']
 #print env['CPPPATH']
+#env.MergeFlags(flags)
 #HAcky, gcc doesn't look at CPPPATH, only at CPATH
 #env['CPATH'] = env['CPPPATH']
 
-executable = env.Program(target="resource-applet", source=["src/resource-applet.h", "src/resource-applet.c"])
+executable = env.Program(target="resource-applet", source=["src/resource-applet.c"])
 
 # This is hard-coded because I don't understand how LIBEXECDIR magically appears
 executable_target = env.Install("/usr/lib/mate-applets", executable)

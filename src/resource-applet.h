@@ -16,8 +16,8 @@
  * =====================================================================================
  */
 
-#ifndef RESOURCE_MONITOR_APPLET_H
-#define RESOURCE_MONITOR_APPLET_H
+#ifndef RESOURCE_APPLET_H
+#define RESOURCE_APPLET_H
 
 #include <gtk/gtk.h>
 #include <mate-panel-applet.h>
