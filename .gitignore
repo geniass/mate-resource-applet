@@ -19,3 +19,6 @@
 # Vim
 *.un~
 *.swp
+
+#SCons
+.build

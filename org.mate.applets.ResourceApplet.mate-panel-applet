@@ -1,6 +1,6 @@
 [Applet Factory]
 Id=ResourceMonitorFactory
-Location=@LIBEXECDIR@/resource-monitor-applet
+Location=/usr/lib/mate-applets/resource-applet
 _Name=Resource Monitor Applet Factory
 _Description=Resource Monitor Applet Factory
 
