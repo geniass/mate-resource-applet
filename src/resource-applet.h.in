@@ -19,12 +19,12 @@
 #ifndef RESOURCE_APPLET_H
 #define RESOURCE_APPLET_H
 
+#define Applet_VERSION_MAJOR @Applet_VERSION_MAJOR@
+#define Applet_VERSION_MINOR @Applet_VERSION_MINOR@
+
 #include <gtk/gtk.h>
 #include <mate-panel-applet.h>
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif /* HAVE_CONFIG_H */
 
 typedef struct ResourceMonitorApplet ResourceMonitorApplet;
 struct ResourceMonitorApplet {
