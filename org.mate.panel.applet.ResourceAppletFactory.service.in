@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.mate.panel.applet.ResourceAppletFactory
+Exec=$MATE_APPLETS/resource-applet
