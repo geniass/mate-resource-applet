@@ -1,0 +1,10 @@
+[Applet Factory]
+Id=ResourceMonitorFactory
+Location=@LIBEXECDIR@/resource-monitor-applet
+_Name=Resource Monitor Applet Factory
+_Description=Resource Monitor Applet Factory
+
+[ResourceMonitorApplet]
+_Name=System Resources Monitor
+_Description=Monitors the system's free RAM and CPU usage (and stuff)
+Icon=battery
