@@ -119,29 +119,29 @@ static void size_allocate_cb(MatePanelApplet *applet,
         resource_applet->size = allocation->width;
 
     } else{
-            if(resource_applet->size == allocation->height)
-                return;
-            resource_applet->size = allocation->height;
+        if(resource_applet->size == allocation->height)
+            return;
+        resource_applet->size = allocation->height;
 
-            /* TODO: call all the necessary *_changed functions */
-        }
+        /* TODO: call all the necessary *_changed functions */
     }
+}
 
-    static void style_set_cb(GtkWidget *widget,
-                         GtkStyle *old_style,
-                         gpointer data) {}
+static void style_set_cb(GtkWidget *widget,
+        GtkStyle *old_style,
+        gpointer data) {}
 
-    /*static const GtkActionEntry sensors_applet_menu_actions[] = {
-	{ "Preferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
-		NULL, NULL,
-		G_CALLBACK(prefs_cb) },
-	{ "Help", GTK_STOCK_HELP, N_("_Help"),
-		NULL, NULL,
-		G_CALLBACK(help_cb) },
-	{ "About", GTK_STOCK_ABOUT, N_("_About"),
-		NULL, NULL,
-		G_CALLBACK(about_cb) }
-};*/
+/*static const GtkActionEntry sensors_applet_menu_actions[] = {
+  { "Preferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
+  NULL, NULL,
+  G_CALLBACK(prefs_cb) },
+  { "Help", GTK_STOCK_HELP, N_("_Help"),
+  NULL, NULL,
+  G_CALLBACK(help_cb) },
+  { "About", GTK_STOCK_ABOUT, N_("_About"),
+  NULL, NULL,
+  G_CALLBACK(about_cb) }
+  };*/
 
 
 void resource_applet_init(ResourceApplet* resource_applet){

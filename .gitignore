@@ -32,3 +32,4 @@ Makefile
 org.mate.applets.ResourceApplet.mate-panel-applet
 org.mate.panel.applet.ResourceAppletFactory.service
 resource-applet.h
+build
