@@ -22,3 +22,14 @@
 
 #SCons
 .build
+.sconsign.dblite
+
+#CMake
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+Makefile
+org.mate.applets.ResourceApplet.mate-panel-applet
+org.mate.panel.applet.ResourceAppletFactory.service
+resource-applet.h
+build

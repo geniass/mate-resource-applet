@@ -9,7 +9,7 @@ env = Environment(tools=['default', 'scanreplace'], toolpath=['tools'])
 #env.ParseConfig('pkg-config --cflags --libs glib-2.0')
 #env.ParseConfig('pkg-config --cflags --libs libmatepanelapplet-3.0')
 #env.ParseConfig('pkg-config --cflags --libs gtk+-2.0')
-
+"""
 flags = env.ParseFlags('!pkg-config --cflags --libs glib-2.0')
 print "GLIB: ", flags
 print "\n\n\n"
@@ -26,6 +26,11 @@ print flags
 print "\n\n\n"
 
 env.Append(CPPPATH = ["src"])
+"""
+
+env.MergeFlags(env.ParseFlags('!pkg-config --cflags --libs glib-2.0'))
+env.MergeFlags(env.ParseFlags('!pkg-config --cflags --libs libmatepanelapplet-3.0'))
+env.MergeFlags(env.ParseFlags('!pkg-config --cflags --libs gtk+-2.0'))
 
 #env['CPPPATH'] = flags['CPPPATH']
 #print env['CPPPATH']
