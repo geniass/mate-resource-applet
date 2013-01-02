@@ -42,9 +42,17 @@ env = Environment(tools=['default', 'scanreplace'], toolpath=['tools'])
 populateEnv(env, 'gtk+-2.0', True)
 populateEnv(env, 'glib-2.0', True)
 populateEnv(env, 'libmatepanelapplet-3.0', True)
-print_whole_dict(env.Dictionary())
+print env.ParseFlags('!pkg-config --cflags --libs gtk+-2.0')
+print env['LIBS']
+#Lotsssssssssssssssss of stuff gets printed
+#print_whole_dict(env.Dictionary())
+
+libs = env['LIBS']
+libs.append("applet")
+print libs
+
 applet = env.StaticLibrary(target="applet", source=["src/resource-applet.c"])
-executable = env.Program(target="resource-applet", source=["src/main.c"], LIBS=["applet"], LIBPATH=".")
+executable = env.Program(target="resource-applet", source=["src/main.c"], LIBS=libs, LIBPATH=".")
 
 # This is hard-coded because I don't understand how LIBEXECDIR magically appears
 executable_target = env.Install("/usr/lib/mate-applets", executable)
