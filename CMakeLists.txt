@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (mate-resource-monitor)
+project (mate-resource-applet)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 set(CMAKE_INSTALL_PREFIX /usr)
@@ -37,20 +37,20 @@ configure_file (
     "${PROJECT_SOURCE_DIR}/org.mate.panel.ResourceApplet.mate-panel-applet.in"
     "${PROJECT_BINARY_DIR}/org.mate.panel.ResourceApplet.mate-panel-applet")
 configure_file (
-    "${PROJECT_SOURCE_DIR}/org.mate.panel.ResourceAppletFactory.service.in"
-    "${PROJECT_BINARY_DIR}/org.mate.panel.ResourceAppletFactory.service")
+    "${PROJECT_SOURCE_DIR}/org.mate.panel.applet.ResourceAppletFactory.service.in"
+    "${PROJECT_BINARY_DIR}/org.mate.panel.applet.ResourceAppletFactory.service")
 
 include_directories("${PROJECT_BINARY_DIR}")
 
 add_library(MateApplet resource-applet.c)
 
-add_executable(mate-resource-monitor main.c)
-TARGET_LINK_LIBRARIES(mate-resource-monitor ${GTK2_LIBRARIES})
-TARGET_LINK_LIBRARIES(mate-resource-monitor ${GLIB2_LIBRARIES})
-TARGET_LINK_LIBRARIES(mate-resource-monitor ${Libmatepanelapplet-3.0_LIBRARIES})
-TARGET_LINK_LIBRARIES(mate-resource-monitor MateApplet)
+add_executable(mate-resource-applet main.c)
+TARGET_LINK_LIBRARIES(mate-resource-applet ${GTK2_LIBRARIES})
+TARGET_LINK_LIBRARIES(mate-resource-applet ${GLIB2_LIBRARIES})
+TARGET_LINK_LIBRARIES(mate-resource-applet ${Libmatepanelapplet-3.0_LIBRARIES})
+TARGET_LINK_LIBRARIES(mate-resource-applet MateApplet)
 
-install(TARGETS mate-resource-monitor DESTINATION lib/mate-applets)
+install(TARGETS mate-resource-applet DESTINATION lib/mate-applets)
 install(FILES ${PROJECT_BINARY_DIR}/org.mate.panel.ResourceApplet.mate-panel-applet DESTINATION share/mate-panel/applets)
-install(FILES ${PROJECT_BINARY_DIR}/org.mate.panel.ResourceAppletFactory.service DESTINATION share/dbus-1/services)
+install(FILES ${PROJECT_BINARY_DIR}/org.mate.panel.applet.ResourceAppletFactory.service DESTINATION share/dbus-1/services)
 

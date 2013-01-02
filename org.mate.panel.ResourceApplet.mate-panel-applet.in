@@ -1,6 +1,6 @@
 [Applet Factory]
 Id=ResourceAppletFactory
-Location=@MATE_APPLETS@/resource-applet
+Location=@MATE_APPLETS@/mate-resource-applet
 Name=Resource Monitor Applet Factory
 Description=Resource Monitor Applet Factory
 
