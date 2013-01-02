@@ -8,3 +8,4 @@ Description=Resource Monitor Applet Factory
 Name=System Resources Monitor
 Description=Monitors the system's free RAM and CPU usage (and stuff)
 Icon=battery
+MateComponentId=OAFIID:ResourceApplet
