@@ -8,6 +8,12 @@ def print_dict(dict, keys):
                 print k, "not found in dict"
         print "\n"
 
+def print_whole_dict(dict):
+    for k in dict.iterkeys():
+        print k, ":"
+        print dict[k]
+    print "\n"
+
 def populateEnv(env, packageName, debug=False):
     d = env.ParseFlags('!pkg-config --cflags --libs %s' % packageName)
 
@@ -36,7 +42,7 @@ env = Environment(tools=['default', 'scanreplace'], toolpath=['tools'])
 populateEnv(env, 'gtk+-2.0', True)
 populateEnv(env, 'glib-2.0', True)
 populateEnv(env, 'libmatepanelapplet-3.0', True)
-
+print_whole_dict(env.Dictionary())
 applet = env.StaticLibrary(target="applet", source=["src/resource-applet.c"])
 executable = env.Program(target="resource-applet", source=["src/main.c"], LIBS=["applet"], LIBPATH=".")
 
