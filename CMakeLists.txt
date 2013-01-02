@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (mate-resource-monitor)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+set(CMAKE_INSTALL_PREFIX /usr)
 
 find_package(GTK2 REQUIRED gtk)
 INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})
