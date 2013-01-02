@@ -34,11 +34,11 @@ configure_file (
 set(MATE_APPLETS /usr/lib/mate-applets)
 # configure mate applet file and dbus. Hardcoded for now
 configure_file (
-    "${PROJECT_SOURCE_DIR}/org.mate.applets.ResourceApplet.mate-panel-applet.in"
-    "${PROJECT_BINARY_DIR}/org.mate.applets.ResourceApplet.mate-panel-applet")
+    "${PROJECT_SOURCE_DIR}/org.mate.panel.ResourceApplet.mate-panel-applet.in"
+    "${PROJECT_BINARY_DIR}/org.mate.panel.ResourceApplet.mate-panel-applet")
 configure_file (
-    "${PROJECT_SOURCE_DIR}/org.mate.panel.applet.ResourceAppletFactory.service.in"
-    "${PROJECT_BINARY_DIR}/org.mate.panel.applet.ResourceAppletFactory.service")
+    "${PROJECT_SOURCE_DIR}/org.mate.panel.ResourceAppletFactory.service.in"
+    "${PROJECT_BINARY_DIR}/org.mate.panel.ResourceAppletFactory.service")
 
 include_directories("${PROJECT_BINARY_DIR}")
 
@@ -51,6 +51,6 @@ TARGET_LINK_LIBRARIES(mate-resource-monitor ${Libmatepanelapplet-3.0_LIBRARIES})
 TARGET_LINK_LIBRARIES(mate-resource-monitor MateApplet)
 
 install(TARGETS mate-resource-monitor DESTINATION lib/mate-applets)
-install(FILES ${PROJECT_BINARY_DIR}/org.mate.applets.ResourceApplet.mate-panel-applet DESTINATION share/mate-panel/applets)
-install(FILES ${PROJECT_BINARY_DIR}/org.mate.panel.applet.ResourceAppletFactory.service DESTINATION share/dbus-1/services)
+install(FILES ${PROJECT_BINARY_DIR}/org.mate.panel.ResourceApplet.mate-panel-applet DESTINATION share/mate-panel/applets)
+install(FILES ${PROJECT_BINARY_DIR}/org.mate.panel.ResourceAppletFactory.service DESTINATION share/dbus-1/services)
 
