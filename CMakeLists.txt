@@ -1,11 +1,20 @@
 cmake_minimum_required (VERSION 2.6)
 project (mate-resource-monitor)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+set(PROJECT_BINARY_DIR "build")
+
 find_package(GTK2 REQUIRED)
 INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})
 IF (NOT GTK2_FOUND)
     MESSAGE (FATAL_ERROR "GTK NOT FOUND")
 ENDIF (NOT GTK2_FOUND)
+
+find_package(Libmatepanelapplet-3.0 REQUIRED)
+INCLUDE_DIRECTORIES(${Libmatepanelapplet-3.0_INCLUDE_DIRS})
+IF (NOT Libmatepanelapplet-3.0_FOUND)
+    MESSAGE(FATAL_ERROR "MATE PANEL not found")
+ENDIF (NOT Libmatepanelapplet-3.0_FOUND)
 
 #Version number
 set(Applet_VERSION_MAJOR 1)
@@ -27,8 +36,11 @@ configure_file (
 
 include_directories("${PROJECT_BINARY_DIR}")
 
-add_executable(mate-resource-monitor resource-applet.c)
+add_library(MateApplet resource-applet.c)
+
+add_executable(mate-resource-monitor main.c)
 TARGET_LINK_LIBRARIES(mate-resource-monitor ${GTK2_LIBRARIES})
+TARGET_LINK_LIBRARIES(mate-resource-monitor ${Libmatepanelapplet-3.0_LIBRARIES})
 
 install(TARGETS mate-resource-monitor DESTINATION lib/mate-applets)
 install(FILES ${PROJECT_BINARY_DIR}/org.mate.applets.ResourceApplet.mate-panel-applet DESTINATION share/mate-panel/applets)

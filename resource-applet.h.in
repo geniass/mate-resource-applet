@@ -36,6 +36,6 @@ struct ResourceMonitorApplet {
 };
 
 
-void resource_monitor_applet_init(ResourceMonitorApplet *applet);
+void resource_applet_init(ResourceMonitorApplet *applet);
 
 #endif /* RESOURCE_MONITOR_APPLET_H */

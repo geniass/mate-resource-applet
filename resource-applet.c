@@ -47,8 +47,8 @@ static void help_cb(GtkAction *action,
         gpointer data) {}
 
 static void destroy_cb(GtkWidget *widget, gpointer data) {
-    ResourceMonitorApplet *resource_applet;
-    resource_applet = (ResourceMonitorApplet *) data;
+    ResourceApplet *resource_applet;
+    resource_applet = (ResourceApplet *) data;
     /* Destroy all components of the applet, then the applet itself */
 
     gtk_widget_destroy(GTK_WIDGET(resource_applet->applet));
@@ -103,12 +103,12 @@ static void change_orient_cb (MatePanelApplet *applet,
 static void size_allocate_cb(MatePanelApplet *applet, 
         GtkAllocation *allocation, 
         gpointer data) {
-    ResourceMonitorApplet *resource_applet;
+    ResourceApplet *resource_applet;
     MatePanelAppletOrient orient;
 
     g_debug("size-allocate occurred");
 
-    resource_applet = (ResourceMonitorApplet *) data;
+    resource_applet = (ResourceApplet *) data;
     orient = mate_panel_applet_get_orient(resource_applet->applet);
 
     if ((orient == MATE_PANEL_APPLET_ORIENT_LEFT) || 
@@ -144,7 +144,7 @@ static void size_allocate_cb(MatePanelApplet *applet,
 };*/
 
 
-void resource_monitor_applet_init(ResourceMonitorApplet* resource_applet){
+void resource_applet_init(ResourceApplet* resource_applet){
     g_assert(resource_applet);
     g_assert(resource_applet->applet);
 
