@@ -38,7 +38,8 @@ env.MergeFlags(env.ParseFlags('!pkg-config --cflags --libs gtk+-2.0'))
 #HAcky, gcc doesn't look at CPPPATH, only at CPATH
 #env['CPATH'] = env['CPPPATH']
 
-executable = env.Program(target="resource-applet", source=["src/resource-applet.c"])
+applet = env.StaticLibrary(target="applet", source=["src/resource-applet.c"])
+executable = env.Program(target="resource-applet", source=["src/main.c"], LIBS=["applet"], LIBPATH=".")
 
 # This is hard-coded because I don't understand how LIBEXECDIR magically appears
 executable_target = env.Install("/usr/lib/mate-applets", executable)
