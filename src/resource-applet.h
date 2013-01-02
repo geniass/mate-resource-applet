@@ -22,12 +22,8 @@
 #include <gtk/gtk.h>
 #include <mate-panel-applet.h>
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif /* HAVE_CONFIG_H */
-
-typedef struct ResourceMonitorApplet ResourceMonitorApplet;
-struct ResourceMonitorApplet {
+typedef struct ResourceApplet ResourceApplet;
+struct ResourceApplet {
         /* The actual applet */
         MatePanelApplet *applet;
         gint size;
@@ -36,6 +32,6 @@ struct ResourceMonitorApplet {
 };
 
 
-void resource_monitor_applet_init(ResourceMonitorApplet *applet);
+void resource_applet_init(ResourceApplet *applet);
 
-#endif /* RESOURCE_MONITOR_APPLET_H */
+#endif /* RESOURCE_APPLET_H */

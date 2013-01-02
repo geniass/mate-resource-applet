@@ -47,8 +47,8 @@ static void help_cb(GtkAction *action,
         gpointer data) {}
 
 static void destroy_cb(GtkWidget *widget, gpointer data) {
-    ResourceMonitorApplet *resource_applet;
-    resource_applet = (ResourceMonitorApplet *) data;
+    ResourceApplet *resource_applet;
+    resource_applet = (ResourceApplet *) data;
     /* Destroy all components of the applet, then the applet itself */
 
     gtk_widget_destroy(GTK_WIDGET(resource_applet->applet));
@@ -103,12 +103,12 @@ static void change_orient_cb (MatePanelApplet *applet,
 static void size_allocate_cb(MatePanelApplet *applet, 
         GtkAllocation *allocation, 
         gpointer data) {
-    ResourceMonitorApplet *resource_applet;
+    ResourceApplet *resource_applet;
     MatePanelAppletOrient orient;
 
     g_debug("size-allocate occurred");
 
-    resource_applet = (ResourceMonitorApplet *) data;
+    resource_applet = (ResourceApplet *) data;
     orient = mate_panel_applet_get_orient(resource_applet->applet);
 
     if ((orient == MATE_PANEL_APPLET_ORIENT_LEFT) || 
@@ -119,32 +119,32 @@ static void size_allocate_cb(MatePanelApplet *applet,
         resource_applet->size = allocation->width;
 
     } else{
-            if(resource_applet->size == allocation->height)
-                return;
-            resource_applet->size = allocation->height;
+        if(resource_applet->size == allocation->height)
+            return;
+        resource_applet->size = allocation->height;
 
-            /* TODO: call all the necessary *_changed functions */
-        }
+        /* TODO: call all the necessary *_changed functions */
     }
+}
 
-    static void style_set_cb(GtkWidget *widget,
-                         GtkStyle *old_style,
-                         gpointer data) {}
+static void style_set_cb(GtkWidget *widget,
+        GtkStyle *old_style,
+        gpointer data) {}
 
-    /*static const GtkActionEntry sensors_applet_menu_actions[] = {
-	{ "Preferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
-		NULL, NULL,
-		G_CALLBACK(prefs_cb) },
-	{ "Help", GTK_STOCK_HELP, N_("_Help"),
-		NULL, NULL,
-		G_CALLBACK(help_cb) },
-	{ "About", GTK_STOCK_ABOUT, N_("_About"),
-		NULL, NULL,
-		G_CALLBACK(about_cb) }
-};*/
+/*static const GtkActionEntry sensors_applet_menu_actions[] = {
+  { "Preferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
+  NULL, NULL,
+  G_CALLBACK(prefs_cb) },
+  { "Help", GTK_STOCK_HELP, N_("_Help"),
+  NULL, NULL,
+  G_CALLBACK(help_cb) },
+  { "About", GTK_STOCK_ABOUT, N_("_About"),
+  NULL, NULL,
+  G_CALLBACK(about_cb) }
+  };*/
 
 
-void resource_monitor_applet_init(ResourceMonitorApplet* resource_applet){
+void resource_applet_init(ResourceApplet* resource_applet){
     g_assert(resource_applet);
     g_assert(resource_applet->applet);
 
