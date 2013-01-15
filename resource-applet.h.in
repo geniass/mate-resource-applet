@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 #include <mate-panel-applet.h>
 
+//const double megabyte = 1024 * 1024;
 
 typedef struct ResourceApplet ResourceApplet;
 struct ResourceApplet {
