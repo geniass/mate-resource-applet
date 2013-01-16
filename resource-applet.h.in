@@ -25,7 +25,13 @@
 #include <gtk/gtk.h>
 #include <mate-panel-applet.h>
 
-//const double megabyte = 1024 * 1024;
+struct meminfo {
+    unsigned long totalram;
+    unsigned long freeram;
+    unsigned long bufferram;
+    unsigned long cacheram;
+};
+
 
 typedef struct ResourceApplet ResourceApplet;
 struct ResourceApplet {

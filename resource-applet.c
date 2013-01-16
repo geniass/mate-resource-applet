@@ -25,6 +25,7 @@
 #include <mate-panel-applet.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <glib/gprintf.h>
 #include <gio/gio.h>
@@ -48,7 +49,7 @@ static gboolean start_timer = FALSE;
 /* Display seconds expired */
 static int sec_expired = 0;
 
-const char* freeram = " used of ";
+const char* freeram = " free of ";
 const char* percent_used_ram = "% used";
 const char* mb = " MB";
 
@@ -161,19 +162,63 @@ static void style_set_cb(GtkWidget *widget,
   G_CALLBACK(about_cb) }
   };*/
 
-static gboolean
+int parseLine(char* line, int size) {
+    int i = strlen(line);
+    while (*line < '0' || *line > '9') {
+        line++;
+    }
+
+    line[i-3] = '\0'; //ignore the rest
+    return atoi(line);
+}
+
+struct meminfo* getRAMInfo () {
+    struct meminfo* mi = malloc(sizeof(struct meminfo));
+    FILE* file = fopen("/proc/meminfo", "r");
+    char line[128];
+
+    while (fgets(line, 128, file) != NULL) {
+        if (strstr(line, "MemTotal:") != NULL) {
+            int s = parseLine(line, 128);
+            mi->totalram = s;
+        }
+        else if (strstr(line, "MemFree:") != NULL) {
+            int s = parseLine(line, 128);
+            mi->freeram = s;
+        }
+        else if (strstr(line, "Buffers:") != NULL) {
+            int s = parseLine(line, 128);
+            mi->bufferram = s;
+        }
+        else if (strstr(line, "Cached:") != NULL && line[0] == 'C') { //We want 'Cached', not 'SwapCached'
+            int s = parseLine(line, 128);
+            mi->cacheram = s;
+        }
+    }
+    fclose(file);
+    return mi;
+}
+
+
+    static gboolean
 _label_update(gpointer data)
 {
     GtkLabel *label = (GtkLabel*)data;
 
+    /*
     struct sysinfo system;
     sysinfo(&system);
 
     double totalram_mb = (double) ((double)(system.totalram * system.mem_unit) / (1024 * 1024));
-    double freeram_mb = (double) ((double) (system.freeram * system.mem_unit) / (1024 * 1024));
+    double freeram_mb = (double) ((double) (system.freeram * system.mem_unit + system.bufferram * system.mem_unit) / (1024 * 1024));
+    double percent_used = ((totalram_mb - freeram_mb) * 100) / totalram_mb;*/
+
+    struct meminfo* mi = getRAMInfo();
+    double totalram_mb = mi->totalram / 1024.0;
+    double freeram_mb = (mi->freeram + mi->bufferram + mi->cacheram) / 1024.0;
     double percent_used = ((totalram_mb - freeram_mb) * 100) / totalram_mb;
-    unsigned int mem_unit = system.mem_unit;
-    printf("mem_unit: %u", mem_unit);
+
+    free(mi);
 
     const int totalram_len = snprintf(NULL, 0, "%.0f", totalram_mb); /* work out length of buffer */
     assert(totalram_len > 0);
@@ -195,11 +240,11 @@ _label_update(gpointer data)
 
 
     char output[strlen(freeram) + strlen(mb) + totalram_len + freeram_len + percent_len + strlen(mb) + strlen(percent_used_ram) + 3 + 1];
-strcpy(output, buffer_freeram);
-strcat(output, mb);
+    strcpy(output, buffer_freeram);
+    strcat(output, mb);
     strcat(output, freeram);
     strcat(output, buffer_totalram);
-        strcat(output, " MB | ");
+    strcat(output, " MB | ");
     strcat(output, buffer_percent_used);
     strcat(output, percent_used_ram);
     gtk_label_set_label(label, output);
@@ -207,7 +252,7 @@ strcat(output, mb);
     return continue_timer;
 }
 
-static void
+    static void
 _start_timer (GtkWidget *button, gpointer data)
 {
     (void)button;/*Avoid compiler warnings*/
@@ -238,24 +283,26 @@ void resource_applet_init(ResourceApplet* resource_applet){
 
     g_signal_connect(resource_applet->applet, "destroy", G_CALLBACK(destroy_cb), resource_applet);
 
+    /*
     struct sysinfo system;
     sysinfo(&system);
 
     double totalram_mb = ((double)(system.totalram * system.mem_unit));
     double freeram_mb = (double) ((double) (system.freeram * system.mem_unit));
-    double percent_used = ((totalram_mb - freeram_mb) * 100) / totalram_mb;
-        
+    double percent_used = ((totalram_mb - freeram_mb) * 100) / totalram_mb;           */
+
     //int len = snprintf(NULL, 0, "%.3f", totalram_mb); /* work out length of buffer */
     //assert(len > 0);
     /* C99 */
     //char buffer[len + 1];
     //double_to_string(totalram_mb, len, buffer);
-    
-/* don't know how to reuse this */
 
-    int len = snprintf(NULL, 0, "%.0f", freeram_mb); /* work out length of buffer */
+    /* don't know how to reuse this */
+
+    /*
+    int len = snprintf(NULL, 0, "%.0f", freeram_mb); // work out length of buffer 
     assert(len > 0);
-    /* C99 */
+    //C99
     char buffer[len + 1];
     double_to_string(freeram_mb, len, buffer);
 
@@ -264,9 +311,9 @@ void resource_applet_init(ResourceApplet* resource_applet){
     strcpy(output, "Free RAM: ");
     strcat(output, buffer);
     strcat(output, " MB");
-    GtkWidget* label = gtk_label_new(output);
+    GtkWidget* label = gtk_label_new(output); */
 
-    //int len = snprintf(NULL, 0, "%.3f", percent_used); /* work out length of buffer */
+    //int len = snprintf(NULL, 0, "%.3f", percent_used);  work out length of buffer */
     //assert(len > 0);
     /* C99 */
     //char buffer[len + 1];
@@ -279,6 +326,9 @@ void resource_applet_init(ResourceApplet* resource_applet){
     //strcat(output, " MB");
     //GtkWidget* label = gtk_label_new(output);
     
+
+GtkWidget* label = gtk_label_new("blah");
+
 
     _start_timer(NULL, label);
     g_timeout_add_seconds(1, _label_update, label);
